@@ -1,4 +1,4 @@
-package com.example.sentencebuilder;
+package com.example.sentencebuilder.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
