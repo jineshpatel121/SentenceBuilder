@@ -1,0 +1,59 @@
+-- CS4485 Senior Design - Sentence Builder
+-- Database schema foundation.
+--
+-- This schema uses surrogate integer keys for entities that may be referenced
+-- by other tables. Digit-only values are stored as numbers only when arithmetic
+-- is meaningful. Variable-length text uses VARCHAR/TEXT because word, file, and
+-- sentence lengths are not fixed.
+
+CREATE DATABASE IF NOT EXISTS sentence_builder
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
+USE sentence_builder;
+
+CREATE TABLE IF NOT EXISTS words (
+    word_id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    word_text VARCHAR(100) NOT NULL,
+    occurrence_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    sentence_start_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    sentence_end_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    user_choice_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    PRIMARY KEY (word_id),
+    UNIQUE KEY uq_words_text (word_text)
+);
+
+CREATE TABLE IF NOT EXISTS word_followers (
+    word_id INT UNSIGNED NOT NULL,
+    following_word_id INT UNSIGNED NOT NULL,
+    occurrence_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    user_choice_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    PRIMARY KEY (word_id, following_word_id),
+    CONSTRAINT fk_word_followers_word
+        FOREIGN KEY (word_id) REFERENCES words (word_id),
+    CONSTRAINT fk_word_followers_following
+        FOREIGN KEY (following_word_id) REFERENCES words (word_id)
+);
+
+CREATE TABLE IF NOT EXISTS imported_files (
+    import_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    file_name VARCHAR(255) NOT NULL,
+    file_path VARCHAR(1000) NOT NULL,
+    word_count BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    file_size_bytes BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    imported_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (import_id),
+    KEY idx_imported_files_name (file_name)
+);
+
+CREATE TABLE IF NOT EXISTS generated_sentences (
+    sentence_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    sentence_text TEXT NOT NULL,
+    starting_word_id INT UNSIGNED NULL,
+    generation_method VARCHAR(50) NOT NULL,
+    generated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (sentence_id),
+    KEY idx_generated_sentences_starting_word (starting_word_id),
+    CONSTRAINT fk_generated_sentences_starting_word
+        FOREIGN KEY (starting_word_id) REFERENCES words (word_id)
+);
