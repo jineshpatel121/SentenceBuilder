@@ -6,5 +6,6 @@ module com.example.sentencebuilder {
     opens com.example.sentencebuilder to javafx.fxml;
     exports com.example.sentencebuilder;
     exports com.example.sentencebuilder.ui;
+    exports com.example.sentencebuilder.logic;
     opens com.example.sentencebuilder.ui to javafx.fxml;
 }
