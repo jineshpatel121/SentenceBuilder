@@ -2,7 +2,7 @@
 
 CS4485 Senior Design — Fall 2026 (Prof. John Cole)
 
-A JavaFX application that reads text files, builds a word-frequency database, and generates new sentences using word-probability algorithms and auto-complete.
+A JavaFX application that reads plain-text files, learns word and word-following statistics, stores project data in MySQL/MariaDB, and will generate new sentences using word-probability algorithms and auto-complete.
 
 ## Tech stack
 
@@ -12,45 +12,99 @@ A JavaFX application that reads text files, builds a word-frequency database, an
 - **Build tool:** Maven
 - **IDE:** IntelliJ IDEA (Community Edition) recommended
 
-## Project structure
+## Architecture
 
-The codebase follows a three-layer architecture:
+The project follows a three-layer architecture:
+
+```
+User Interface
+      ↓
+Business Logic
+      ↓
+Technical Services
+      ↓
+MySQL / MariaDB
+```
+
+![Three-layer architecture](docs/architecture-diagram.svg)
+
+The main source packages are:
 
 ```
 src/main/java/com/example/sentencebuilder/
-├── ui/       → JavaFX views, controllers, FXML
-├── logic/    → Business logic, sentence generation, Controller
-├── data/     → Database access, file import/parsing
+├── ui/       → JavaFX controllers and user-interface behavior
+├── logic/    → Word/sentence models, vocabulary, tokenization,
+│               sentence generation, import analysis, application controller
+└── data/     → Database access layer (currently a repository placeholder)
+
+src/main/resources/
+├── com/example/sentencebuilder/ → FXML resources
+└── database/schema.sql          → Initial MySQL/MariaDB schema
 ```
 
-Information flows: **UI → Business logic → Technical services → MySQL database**, with results returned back up through the same layers.
+The UI should communicate with the business-logic layer instead of directly accessing the database. Database and other technical-service operations remain separated from JavaFX code.
+
+## Current progress
+
+The project is still in development, but the initial scaffold has expanded beyond the starter JavaFX application.
+
+### Completed groundwork
+
+- JavaFX/Maven project structure and three-layer package organization.
+- Architecture flow diagram in `docs/architecture-diagram.svg`.
+- Initial MySQL/MariaDB schema with tables for:
+  - words
+  - word-following relationships
+  - imported files
+  - generated sentences
+- Plain-text file validation through `ImportFileValidator`.
+- File-analysis groundwork through `TextFileAnalyzer` and `ImportSummary`, including line/token counts, progress callbacks, and cancellation support.
+- First-pass tokenization through `ImportTokenizer`.
+- In-memory business-logic models:
+  - `Word`
+  - `Sentence`
+  - `Vocabulary`
+- `ApplicationController` to keep the UI decoupled from business logic.
+- Early `SentenceGenerator` implementation that can start with a known word and append its most common learned follower.
+
+### Still to be implemented or integrated
+
+- JDBC/MySQL repository implementation and database CRUD wiring.
+- Connecting text parsing/import results to persistent database storage.
+- Full JavaFX screens and event handling for project features.
+- Complete sentence-generation algorithms, including weighted/probability-based selection.
+- Auto-complete behavior.
+- Word-data viewing/editing and reporting features.
+- Generated-sentence history integration.
+- Full testing, integration, and final UI/UX polish.
 
 ## Getting started
 
-1. Clone the repo:
-   ```
+1. Clone the repository:
+   ```bash
    git clone https://github.com/s1gdel/SentenceBuilder.git
+   cd SentenceBuilder
    ```
-2. Open the folder in IntelliJ IDEA.
-3. Let Maven download dependencies (JavaFX is pulled in automatically via `pom.xml`).
-4. Set the Project SDK if prompted (JDK 17+ recommended).
-5. Run `HelloApplication.java` to confirm your environment works.
 
-## Team roles
+2. Open the project in IntelliJ IDEA.
 
-| Person | Responsibility |
-|--------|----------------|
-| Person 1 | Program structure, three-layer architecture, initial design |
-| Person 2 | Business logic, design patterns, Controller |
-| Person 3 | Data storage, database/file access (technical services) |
-| Person 4 | User interface, events, testing, user experience |
+3. Let Maven download the dependencies from `pom.xml`.
+
+4. Use JDK 17 or newer.
+
+5. Run `HelloApplication.java` to confirm the current JavaFX scaffold works.
+
+The application is still under active development, so the current Hello screen is only a project scaffold and not the final interface.
 
 ## Contributing
 
-- Work on a feature branch, not directly on `main`.
+- Work on a feature branch instead of directly on `main`.
+- Pull the latest changes before starting new work.
 - Open a pull request for review before merging.
-- Keep each class focused on a single responsibility.
+- Keep UI, business logic, and technical-service/database responsibilities separated.
+- Keep each class and method focused on a clear responsibility.
+- Follow the project's documentation and coding standards when adding or modifying code.
 
 ## Status
 
-🚧 In progress — project scaffold and layer structure set up. Database schema, sentence generation, and UI still to come.
+🚧 **In progress.** Database schema and import/business-logic foundations are present. Database persistence, full sentence generation, auto-complete, reporting, and the final JavaFX interface are still under development.
