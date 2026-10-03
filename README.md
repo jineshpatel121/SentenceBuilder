@@ -53,4 +53,4 @@ Information flows: **UI → Business logic → Technical services → MySQL data
 
 ## Status
 
-🚧 In progress — project scaffold and layer structure set up. Database schema, sentence generation, and UI still to come.
+In progress: The project scaffold and layer structure set up. Database schema, sentence generation, and UI still to come.
