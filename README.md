@@ -107,4 +107,4 @@ The application is still under active development, so the current Hello screen i
 
 ## Status
 
-🚧 **In progress.** Database schema and import/business-logic foundations are present. Database persistence, full sentence generation, auto-complete, reporting, and the final JavaFX interface are still under development.
+In progress: The project scaffold and layer structure set up. Database schema, sentence generation, and UI still to come.
