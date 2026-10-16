@@ -58,8 +58,8 @@ The project is still in development, but the initial scaffold now includes a fir
   - imported files
   - generated sentences
 - Plain-text file validation through `ImportFileValidator`.
-- File-analysis logic through `TextFileAnalyzer` and `ImportSummary`, including line/token counts, progress callbacks, and cancellation support.
-- First-pass tokenization through `ImportTokenizer`.
+- File-analysis logic through `TextFileAnalyzer` and `ImportSummary`, including line counts, progress callbacks, and cancellation support.
+- File analysis now uses the shared `ImportTokenizer` and `Vocabulary` logic so the UI can report recognized words and distinct vocabulary size using the project's current import rules.
 - In-memory business-logic models:
   - `Word`
   - `Sentence`
@@ -72,12 +72,13 @@ The project is still in development, but the initial scaffold now includes a fir
   - background processing
   - progress/status updates
   - cancellation
+  - recognized-word and distinct-word results
   - simple success/error feedback
 
 ### Still to be implemented or integrated
 
 - JDBC/MySQL repository implementation and database CRUD wiring.
-- Connecting analyzed/imported text to the tokenizer, vocabulary, and persistent database storage.
+- Persisting processed text, vocabulary statistics, and imported-file metadata to the database.
 - Additional JavaFX screens and event handling for generation, auto-complete, reports, and word management.
 - Complete sentence-generation algorithms, including weighted/probability-based selection.
 - Auto-complete behavior.
@@ -101,7 +102,7 @@ The project is still in development, but the initial scaffold now includes a fir
 
 5. Run `HelloApplication.java`.
 
-The current interface can select and analyze a plain-text file, but it does not yet write the analyzed data to MySQL.
+The current interface can select a plain-text file and process it with the project's tokenizer/vocabulary logic, but it does not yet write the processed data to MySQL.
 
 ## Contributing
 
@@ -114,4 +115,4 @@ The current interface can select and analyze a plain-text file, but it does not 
 
 ## Status
 
-In progress: file validation/analysis, initial business logic, database schema, and a first responsive JavaFX file-analysis screen are present; database persistence and the remaining application features are still under development.
+In progress: file validation/analysis, tokenizer/vocabulary integration, initial business logic, database schema, and a responsive JavaFX file-analysis screen are present; database persistence and the remaining application features are still under development.
