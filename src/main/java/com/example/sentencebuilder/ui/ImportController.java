@@ -100,7 +100,7 @@ public class ImportController {
             ImportSummary summary = task.getValue();
             finishTask();
             progressBar.setProgress(1);
-            statusLabel.setText("Finished reading " + summary.sourceFile().getFileName() + ".");
+            statusLabel.setText("Finished processing " + summary.sourceFile().getFileName() + ".");
             summaryArea.setText(formatSummary(summary));
         });
 
@@ -224,12 +224,14 @@ public class ImportController {
         return String.format(
                 "File: %s%n"
                         + "Lines read: %,d%n"
-                        + "Tokens read: %,d%n"
+                        + "Recognized words: %,d%n"
+                        + "Distinct words: %,d%n"
                         + "File size: %,d bytes%n"
                         + "Elapsed time: %,d ms",
                 summary.sourceFile().toAbsolutePath(),
                 summary.lineCount(),
                 summary.tokenCount(),
+                summary.distinctWordCount(),
                 summary.fileSizeBytes(),
                 summary.elapsedMilliseconds());
     }
