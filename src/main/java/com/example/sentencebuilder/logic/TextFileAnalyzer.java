@@ -5,21 +5,19 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.StringTokenizer;
 import java.util.concurrent.CancellationException;
 import java.util.function.BiConsumer;
 import java.util.function.BooleanSupplier;
 
 /**
- * Reads a text file without changing application or database state.
- * This gives the JavaFX layer measurable work that can run on a background
- * thread while the final database import pipeline is developed separately.
+ * Reads a text file using the project's current tokenization and vocabulary logic.
+ * The vocabulary created here is temporary, so this class still does not change
+ * application or database state while the persistence layer is being developed.
  */
 public class TextFileAnalyzer {
 
     /**
-     * Reads a text file, counts lines and whitespace-delimited tokens, and reports progress.
-     * The token count is a neutral import metric; it is not the project's final definition of a word.
+     * Reads a text file, learns its words in a temporary vocabulary, and reports progress.
      *
      * @param source file to read using UTF-8
      * @param cancelled callback used to stop work when the user cancels
@@ -36,24 +34,34 @@ public class TextFileAnalyzer {
         long startNanos = System.nanoTime();
         long totalLines = countLines(source, cancelled);
         long completedLines = 0;
-        long tokenCount = 0;
+        Vocabulary vocabulary = new Vocabulary();
 
         progress.accept(0L, totalLines);
         try (BufferedReader reader = Files.newBufferedReader(source, StandardCharsets.UTF_8)) {
             String line;
             while ((line = reader.readLine()) != null) {
                 checkCancelled(cancelled);
-                tokenCount += countTokens(line);
+
+                // Use the shared vocabulary/tokenizer logic instead of a separate whitespace count.
+                vocabulary.learnFromLine(line);
+
                 completedLines++;
                 progress.accept(completedLines, totalLines);
             }
         }
+
+        long tokenCount = vocabulary.snapshotWords()
+                .values()
+                .stream()
+                .mapToLong(Word::getOccurrenceCount)
+                .sum();
 
         long elapsedMilliseconds = (System.nanoTime() - startNanos) / 1_000_000L;
         return new ImportSummary(
                 source,
                 completedLines,
                 tokenCount,
+                vocabulary.getWordCount(),
                 Files.size(source),
                 elapsedMilliseconds);
     }
@@ -75,16 +83,6 @@ public class TextFileAnalyzer {
             }
         }
         return lineCount;
-    }
-
-    /**
-     * Counts whitespace-delimited tokens for a progress/import summary only.
-     *
-     * @param line one line of text from the source file
-     * @return number of tokens found on the line
-     */
-    private long countTokens(String line) {
-        return new StringTokenizer(line).countTokens();
     }
 
     /**
