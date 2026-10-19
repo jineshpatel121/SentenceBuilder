@@ -137,3 +137,154 @@ FILES TOUCHED WITH AI ASSISTANCE
 TIMESHEET NOTE
 
 Added import tokenization rules and basic word-follower tracking in the logic layer
+
+
+--------------------------------------------------------------------------------
+
+AI usage: Person 2 (Subom Sigdel), October 2, 2026
+
+Course: CS4485.0W1 Senior Design, Fall 2026, Team 25, Sentence Builder
+Work date: October 2, 2026
+Tool: Cursor (AI-assisted coding in the IDE)
+
+
+PROMPT
+
+Continue incremental Person 2 work on the Sentence Builder logic layer for October 2, 2026. Build on Vocabulary follower counts and extend SentenceGenerator so generation walks the follower chain up to a bounded maximum length, choosing each next word by weighted random selection from follower occurrence counts. Expose an optional max-length parameter through ApplicationController. Keep scope small: no second algorithm, autocomplete, JDBC, or JavaFX changes. Document new and changed methods.
+
+
+WHAT THE AI ASSISTANT DID
+
+- Updated SentenceGenerator to use weighted random follower selection and a terminating generation loop.
+- Added maxWords overloads on SentenceGenerator and ApplicationController.
+
+
+WHAT I DID (HUMAN REVIEW)
+
+- Submitted the prompt above and reviewed the changes for correct loop bounds and logic-layer scope.
+- Confirmed generation still uses in-memory Vocabulary only.
+
+
+FILES TOUCHED WITH AI ASSISTANCE
+
+- src/main/java/com/example/sentencebuilder/logic/SentenceGenerator.java (updated)
+- src/main/java/com/example/sentencebuilder/logic/ApplicationController.java (updated)
+
+
+TIMESHEET NOTE
+
+Added weighted random sentence generation with a bounded word limit in the logic layer
+
+
+--------------------------------------------------------------------------------
+
+AI usage: Person 2 (Subom Sigdel), October 10, 2026
+
+Course: CS4485.0W1 Senior Design, Fall 2026, Team 25, Sentence Builder
+Work date: October 10, 2026
+Tool: Cursor (AI-assisted coding in the IDE)
+
+
+PROMPT
+
+Continue incremental Person 2 work on the Sentence Builder logic layer for October 10, 2026. The assignment requires at least two sentence-generation algorithms. Add a GenerationMethod type for weighted random and most-common follower selection, keep the existing generation loop in SentenceGenerator, and let ApplicationController pass the chosen method through to generation. Default behavior should remain weighted random. Keep scope small: no autocomplete, JDBC, or JavaFX changes. Document new and changed methods.
+
+
+WHAT THE AI ASSISTANT DID
+
+- Added GenerationMethod with WEIGHTED_RANDOM and MOST_COMMON.
+- Updated SentenceGenerator to pick followers using the selected method.
+- Added ApplicationController.generateSentence(startWord, maxWords, method).
+
+
+WHAT I DID (HUMAN REVIEW)
+
+- Submitted the prompt above and reviewed that both algorithms share one generation loop.
+- Confirmed default generation still uses weighted random selection.
+
+
+FILES TOUCHED WITH AI ASSISTANCE
+
+- src/main/java/com/example/sentencebuilder/logic/GenerationMethod.java (created)
+- src/main/java/com/example/sentencebuilder/logic/SentenceGenerator.java (updated)
+- src/main/java/com/example/sentencebuilder/logic/ApplicationController.java (updated)
+
+
+TIMESHEET NOTE
+
+Added a second sentence-generation algorithm using most-common followers
+
+
+--------------------------------------------------------------------------------
+
+AI usage: Person 2 (Subom Sigdel), October 15, 2026
+
+Course: CS4485.0W1 Senior Design, Fall 2026, Team 25, Sentence Builder
+Work date: October 15, 2026
+Tool: Cursor (AI-assisted coding in the IDE)
+
+
+PROMPT
+
+Continue incremental Person 2 work on the Sentence Builder logic layer for October 15, 2026. Add a first-pass autocomplete helper that returns ranked next-word suggestions from Vocabulary follower counts after a completed previous word. Keep suggestions in the logic layer only, ranked by follower count and then alphabetically for ties. Do not add JavaFX key handling, JDBC, or mid-word prediction. Document new and changed methods.
+
+
+WHAT THE AI ASSISTANT DID
+
+- Added WordSuggestion to hold a candidate word and its follower count.
+- Added Vocabulary.suggestNextWords and ApplicationController.suggestNextWords.
+
+
+WHAT I DID (HUMAN REVIEW)
+
+- Submitted the prompt above and reviewed ranking order and the complete-word suggestion rule.
+- Confirmed autocomplete stays in the logic layer with no UI event handling.
+
+
+FILES TOUCHED WITH AI ASSISTANCE
+
+- src/main/java/com/example/sentencebuilder/logic/WordSuggestion.java (created)
+- src/main/java/com/example/sentencebuilder/logic/Vocabulary.java (updated)
+- src/main/java/com/example/sentencebuilder/logic/ApplicationController.java (updated)
+
+
+TIMESHEET NOTE
+
+Added ranked next-word suggestions from follower counts in the logic layer
+
+
+--------------------------------------------------------------------------------
+
+AI usage: Person 2 (Subom Sigdel), October 17, 2026
+
+Course: CS4485.0W1 Senior Design, Fall 2026, Team 25, Sentence Builder
+Work date: October 17, 2026
+Tool: Cursor (AI-assisted coding in the IDE)
+
+
+PROMPT
+
+Continue incremental Person 2 work on the Sentence Builder logic layer for October 17, 2026. Support feeding generated sentences back into the vocabulary and keep an in-memory history of generated sentences so duplicate checking can be added later. Wire learnFromSentence through ApplicationController and record each generateSentence result. Keep scope small: no database persistence, no JavaFX, and no duplicate-report UI. Document new and changed methods.
+
+
+WHAT THE AI ASSISTANT DID
+
+- Added Vocabulary.learnFromSentence.
+- Updated ApplicationController to remember generated sentences and expose learnFromSentence and getGeneratedSentences.
+
+
+WHAT I DID (HUMAN REVIEW)
+
+- Submitted the prompt above and reviewed that generation history is recorded without changing generation algorithms.
+- Confirmed learned generated text still uses the existing import tokenizer.
+
+
+FILES TOUCHED WITH AI ASSISTANCE
+
+- src/main/java/com/example/sentencebuilder/logic/Vocabulary.java (updated)
+- src/main/java/com/example/sentencebuilder/logic/ApplicationController.java (updated)
+
+
+TIMESHEET NOTE
+
+Added generated-sentence history and learning generated text back into the vocabulary

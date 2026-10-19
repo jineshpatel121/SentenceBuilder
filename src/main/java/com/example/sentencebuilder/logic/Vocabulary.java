@@ -1,6 +1,8 @@
 package com.example.sentencebuilder.logic;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -83,6 +85,47 @@ public class Vocabulary {
             return Collections.emptyMap();
         }
         return Collections.unmodifiableMap(followers);
+    }
+
+    /**
+     * Learns word and follower statistics from a generated or imported sentence.
+     *
+     * @param sentence sentence whose word order should update the vocabulary
+     */
+    public void learnFromSentence(Sentence sentence) {
+        Objects.requireNonNull(sentence, "sentence");
+        learnFromLine(sentence.asText());
+    }
+
+    /**
+     * Returns next-word suggestions ranked by follower count, then alphabetically.
+     * Suggestions are offered only after a complete previous word, matching
+     * the assignment rule that autocomplete starts after space, period, or comma.
+     *
+     * @param previousWordText the completed word before the cursor
+     * @param maxSuggestions maximum number of suggestions to return
+     * @return ranked suggestions; empty when the previous word has no followers
+     */
+    public List<WordSuggestion> suggestNextWords(String previousWordText, int maxSuggestions) {
+        if (maxSuggestions < 1) {
+            throw new IllegalArgumentException("maxSuggestions must be at least 1.");
+        }
+        Map<String, Integer> followers = getFollowers(previousWordText);
+        if (followers.isEmpty()) {
+            return List.of();
+        }
+
+        List<WordSuggestion> suggestions = new ArrayList<>(followers.size());
+        for (Map.Entry<String, Integer> entry : followers.entrySet()) {
+            suggestions.add(new WordSuggestion(entry.getKey(), entry.getValue()));
+        }
+        suggestions.sort(Comparator
+                .comparingInt(WordSuggestion::followerCount)
+                .reversed()
+                .thenComparing(WordSuggestion::wordText));
+
+        int resultSize = Math.min(maxSuggestions, suggestions.size());
+        return List.copyOf(suggestions.subList(0, resultSize));
     }
 
     /**
