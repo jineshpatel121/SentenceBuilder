@@ -1,7 +1,12 @@
 package com.example.sentencebuilder.ui;
 
+import java.nio.file.InvalidPathException;
+import java.nio.file.Path;
+
+import com.example.sentencebuilder.logic.ApplicationController;
 import com.example.sentencebuilder.logic.ImportFileValidator;
 import com.example.sentencebuilder.logic.ImportSummary;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,9 +14,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
-
-import java.nio.file.InvalidPathException;
-import java.nio.file.Path;
 
 /**
  * Handles event-driven behavior for the current text-file analysis screen.
@@ -45,7 +47,19 @@ public class ImportController {
     private TextArea summaryArea;
 
     private TextImportTask activeTask;
+    private ApplicationController applicationController;
 
+
+    /**
+     * Receives the business-logic controller from the application startup code.
+     *
+     * @param applicationController controller this screen should call instead of
+     *                              reading files or touching storage itself
+     */
+    public void setApplicationController(ApplicationController applicationController) {
+        this.applicationController = applicationController;
+    }
+    
     /**
      * Sets the initial control state and watches the path field for validation changes.
      */
