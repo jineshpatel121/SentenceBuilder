@@ -146,11 +146,15 @@ public class ApplicationController {
             BiConsumer<Long, Long> progress) throws IOException {
 
         TextFileAnalyzer analyzer = new TextFileAnalyzer();
+        Vocabulary stagedVocabulary = new Vocabulary();
         ImportSummary summary = analyzer.analyze(
                 source,
-                vocabulary,
+                stagedVocabulary,
                 cancelled,
                 progress);
+
+        // Only change shared application state after the whole file succeeds.
+        vocabulary.mergeFrom(stagedVocabulary);
 
         if (repository != null) {
             repository.saveVocabulary(vocabulary);
