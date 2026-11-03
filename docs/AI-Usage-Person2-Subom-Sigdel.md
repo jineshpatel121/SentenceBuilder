@@ -423,3 +423,56 @@ FILES TOUCHED WITH AI ASSISTANCE
 TIMESHEET NOTE
 
 Completed controller and repository integration for the Sentence Builder business logic
+
+--------------------------------------------------------------------------------
+
+AI usage: Person 2 (Subom Sigdel), November 1, 2026
+
+Course: CS4485.0W1 Senior Design, Fall 2026, Team 25, Sentence Builder
+Work date: November 1, 2026
+Estimated time: 2-3 hours
+Tool: Codex (AI-assisted coding in the IDE)
+
+
+PROPOSED CHANGE
+
+Add duplicate-sentence detection to the business-logic layer. The existing
+ApplicationController already keeps generated sentences in memory, but it does
+not yet provide a way to determine whether a newly generated sentence matches
+one that was already produced. Add a small duplicate-reporting helper that
+compares normalized sentence text, expose it through ApplicationController, and
+cover the behavior with unit tests. Keep the change independent of JavaFX and
+JDBC so the future report screen can call the controller without knowing how
+sentences are stored.
+
+
+SUPPOSED PROBLEM ENCOUNTERED
+
+Repeated generations can be saved in history without any warning, so the
+application cannot currently report duplicate output or distinguish a new
+sentence from an earlier result. This would make the planned duplicate-reporting
+feature incomplete even though generated-sentence history is already being
+recorded.
+
+
+EXPECTED IMPLEMENTATION
+
+- Add a logic-layer method that returns whether a sentence already exists in
+  generated history, using normalized text comparison.
+- Expose the check through ApplicationController for future UI/report use.
+- Add tests for an unseen sentence, an exact duplicate, and differences caused
+  only by surrounding whitespace or capitalization.
+- Preserve the existing repository boundary and current generation behavior.
+
+
+WHAT I DID (HUMAN REVIEW)
+
+- Reviewed the current generated-sentence history in ApplicationController and
+  confirmed that duplicate detection is the next small missing logic milestone.
+- Checked that the proposed change remains within Person 2's business-logic
+  responsibility and does not require database or JavaFX work.
+
+
+TIMESHEET NOTE
+
+Planned duplicate-sentence detection and reporting support in the business logic layer
