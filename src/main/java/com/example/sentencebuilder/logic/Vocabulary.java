@@ -158,6 +158,45 @@ public class Vocabulary {
     }
 
     /**
+     * Restores one stored word with its saved counts. Used by the data layer when
+     * loading from storage; counts are added to whatever the word already has.
+     *
+     * @param text word text
+     * @param occurrenceCount saved occurrence count
+     * @param sentenceStartCount saved sentence-start count
+     * @param sentenceEndCount saved sentence-end count
+     */
+    public void restoreWord(
+            String text,
+            long occurrenceCount,
+            long sentenceStartCount,
+            long sentenceEndCount) {
+        getOrCreateWord(normalizeRequired(text, "text"))
+                .addCounts(occurrenceCount, sentenceStartCount, sentenceEndCount);
+    }
+
+    /**
+     * Restores one stored follower count. Used by the data layer when loading from
+     * storage; both words are created if they are not present yet.
+     *
+     * @param fromText word that comes first
+     * @param toText word that follows it
+     * @param count saved number of times the second word followed the first; at least 1
+     */
+    public void restoreFollower(String fromText, String toText, int count) {
+        if (count < 1) {
+            throw new IllegalArgumentException("A follower count must be at least 1.");
+        }
+        String from = normalizeRequired(fromText, "fromText");
+        String to = normalizeRequired(toText, "toText");
+        getOrCreateWord(from);
+        getOrCreateWord(to);
+        followerCounts
+                .computeIfAbsent(from, ignored -> new LinkedHashMap<>())
+                .merge(to, count, Integer::sum);
+    }
+
+    /**
      * Returns next-word suggestions ranked by follower count, then alphabetically.
      * Suggestions are offered only after a complete previous word, matching
      * the assignment rule that autocomplete starts after space, period, or comma.

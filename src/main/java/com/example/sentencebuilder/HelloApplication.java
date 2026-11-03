@@ -1,5 +1,6 @@
 package com.example.sentencebuilder;
 
+import com.example.sentencebuilder.data.WordRepository;
 import com.example.sentencebuilder.logic.ApplicationController;
 import com.example.sentencebuilder.ui.AutocompleteController;
 import com.example.sentencebuilder.ui.GenerateController;
@@ -24,6 +25,29 @@ public class HelloApplication extends Application {
     private static final double WINDOW_WIDTH = 720;
     private static final double WINDOW_HEIGHT = 560;
 
+    /** False when the database could not be reached and data is kept in memory only. */
+    private boolean databaseConnected;
+
+    /**
+     * Builds the application controller with database storage when the database is
+     * reachable. If it is not, the app still runs, but learned words stay in memory
+     * only and are lost when the window closes.
+     *
+     * @return controller connected to storage, or a memory-only controller
+     */
+    private ApplicationController createApplicationController() {
+        try {
+            ApplicationController controller =
+                    new ApplicationController(WordRepository.fromEnvironment());
+            databaseConnected = true;
+            return controller;
+        } catch (RuntimeException exception) {
+            System.err.println("Database unavailable, running in memory only: " + exception.getMessage());
+            databaseConnected = false;
+            return new ApplicationController();
+        }
+    }
+
     /**
      * Builds the controller, loads the file-analysis view, connects the two, and
      * shows the primary application window.
@@ -33,9 +57,7 @@ public class HelloApplication extends Application {
      */
     @Override
     public void start(Stage stage) throws IOException {
-        // Person 3: once WordRepository implements VocabularyRepository, pass it here,
-        // for example new ApplicationController(new WordRepository(...)).
-        ApplicationController applicationController = new ApplicationController();
+        ApplicationController applicationController = createApplicationController();
 
         FXMLLoader importLoader = new FXMLLoader(
                 HelloApplication.class.getResource("import-view.fxml"));
@@ -100,7 +122,9 @@ public class HelloApplication extends Application {
 
         Scene scene = new Scene(tabs, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        stage.setTitle("Sentence Builder");
+        stage.setTitle(databaseConnected
+                ? "Sentence Builder"
+                : "Sentence Builder (database offline: data will not be saved)");
         stage.setScene(scene);
         stage.show();
     }
