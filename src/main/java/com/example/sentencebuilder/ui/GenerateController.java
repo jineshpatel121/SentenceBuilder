@@ -3,6 +3,7 @@ package com.example.sentencebuilder.ui;
 import com.example.sentencebuilder.logic.ApplicationController;
 import com.example.sentencebuilder.logic.GenerationMethod;
 import com.example.sentencebuilder.logic.Sentence;
+import com.example.sentencebuilder.logic.StorageException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -157,6 +158,9 @@ public class GenerateController {
         } catch (IllegalArgumentException exception) {
             resultLabel.setText("");
             messageLabel.setText(exception.getMessage());
+        } catch (StorageException exception) {
+            messageLabel.setText("The sentence was generated but could not be saved. "
+                    + exception.getMessage());
         }
     }
 }
