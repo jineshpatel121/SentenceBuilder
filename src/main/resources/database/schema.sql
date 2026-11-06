@@ -2,7 +2,7 @@
 -- Database schema foundation.
 -- Initial structure contributed by Jinesh Patel for CS4485.0W1
 -- Senior Design, Team 25, starting September 25, 2026.
--- NetID: [enter your actual UTD NetID].
+-- NetID: JAP220022.
 -- Further database implementation is maintained by the team.
 --
 -- This schema uses surrogate integer keys for entities that may be referenced
