@@ -8,7 +8,7 @@ import java.nio.file.Path;
  * knowing the internal vocabulary data structure.
  *
  * <p>Written by Jinesh Patel for CS4485.0W1 Senior Design, Team 25,
- * starting September 25, 2026. NetID: [enter your actual UTD NetID].
+ * starting September 25, 2026. NetID: JAP220022.
  * Distinct-word reporting added October 16, 2026.
  *
  * @param sourceFile imported text file
