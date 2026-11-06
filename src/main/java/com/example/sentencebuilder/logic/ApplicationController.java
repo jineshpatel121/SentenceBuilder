@@ -194,6 +194,9 @@ public class ApplicationController {
                 cancelled,
                 progress);
 
+        // Jinesh Patel, October 23, 2026: Stage the import in isolation until
+        // the file has been fully read; otherwise cancellation could leave
+        // partially learned words visible in other screens.
         // Only change shared application state after the whole file succeeds.
         vocabulary.mergeFrom(stagedVocabulary);
 
