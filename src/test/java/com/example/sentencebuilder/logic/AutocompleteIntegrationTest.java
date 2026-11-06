@@ -35,7 +35,8 @@ class AutocompleteIntegrationTest {
         assertEquals(false, controller.isKnownWord("unfamiliar"));
         assertEquals(0, controller.getKnownWordCount());
 
-        // A declined dialog has no controller write, so nothing is learned.
+        // A declined JavaFX confirmation intentionally makes no controller
+        // write, so the application's word count remains unchanged.
         assertEquals(0, controller.getKnownWordCount());
 
         controller.addUserWord("unfamiliar");
@@ -63,6 +64,8 @@ class AutocompleteIntegrationTest {
         assertEquals(2, suggestions.get(0).followerCount());
         assertEquals("dog", suggestions.get(1).wordText());
 
+        // The selected/accepted follower is recorded through existing logic,
+        // rather than through JavaFX widgets or direct database access.
         controller.recordSuggestionChoice("the", "bird");
 
         assertEquals(4, controller.getKnownWordCount());

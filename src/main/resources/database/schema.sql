@@ -1,5 +1,9 @@
 -- CS4485 Senior Design - Sentence Builder
 -- Database schema foundation.
+-- Initial structure contributed by Jinesh Patel for CS4485.0W1
+-- Senior Design, Team 25, starting September 25, 2026.
+-- NetID: [enter your actual UTD NetID].
+-- Further database implementation is maintained by the team.
 --
 -- This schema uses surrogate integer keys for entities that may be referenced
 -- by other tables. Digit-only values are stored as numbers only when arithmetic
