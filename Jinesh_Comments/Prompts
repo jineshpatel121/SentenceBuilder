@@ -1,10 +1,10 @@
 # Jinesh — Code comments and AI-assistance notes
-Sentence Builder | CS4485.0W1 Senior Design | Team 25
+Sentence Builder | CS4485.0W1 Senior Design | Team 25 | Jinesh Patel (JAP220022)
 
 ## Scope and privacy
 This document tracks work within Jinesh Patel's assigned scope: the remainder of Database Basics, Event Driven Code, Multithreading, User Experience Considerations, and Other Considerations. It does not claim ownership of teammates' generation algorithms, database repository, or other components.
 
-The brief prompts below are privacy-preserving summaries of technical requests, NOT verbatim chat transcripts or authenticated historical prompt strings. They describe the task/output without including private conversation content. GitHub dates below are based on original source commits; they are not retrospective fabricated creation dates. Git history is the source of truth for provenance. The user's UTD NetID was not available from the supplied materials, so source headers carry an explicit replacement placeholder.
+The brief prompts below are privacy-preserving summaries of technical requests, NOT verbatim chat transcripts or authenticated historical prompt strings. They describe the task/output without including private conversation content. GitHub dates below are based on original source commits; they are not retrospective fabricated creation dates. Git history is the source of truth for provenance. Jinesh Patel confirmed UTD NetID JAP220022 on November 6, 2026. The implementation branch uses this NetID in its documentation headers.
 
 This file deliberately lives on the separate notes/jinesh-comments-prompts branch. Do not merge this notes branch into main. Branches in a public GitHub repository may still be publicly viewable.
 
