@@ -16,7 +16,7 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * <p>Sentence Builder, CS4485.0W1 Senior Design, Team 25.
  * Tests by Jinesh Patel, started October 30, 2026.
- * NetID: [add your actual UTD NetID].
+ * NetID: JAP220022.
  * Confirmation regression added November 6, 2026.
  */
 class AutocompleteIntegrationTest {
