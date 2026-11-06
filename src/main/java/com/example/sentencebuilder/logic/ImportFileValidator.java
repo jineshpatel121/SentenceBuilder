@@ -11,7 +11,7 @@ import java.util.Locale;
  *
  * <p>I, Jinesh Patel (NetID: JAP220022), started this class on September 25,
  * 2026 for CS4485.0W1 Senior Design, Team 25.
- * AI prompt summary: Validate selected text-file paths for existence,
+ * AI prompt: Validate selected text-file paths for existence,
  * readability, file type, and the .txt extension.
  */
 public final class ImportFileValidator {
