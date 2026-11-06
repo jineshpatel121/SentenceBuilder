@@ -158,6 +158,20 @@ public class Vocabulary {
     }
 
     /**
+     * Adds an unfamiliar user-confirmed word without inventing a follower pair.
+     * A word already known is left unchanged because the UI records only new
+     * standalone words through this method.
+     *
+     * @param wordText confirmed word typed by the user
+     */
+    public void addUserWord(String wordText) {
+        String normalized = normalizeRequired(wordText, "wordText");
+        if (!wordsByText.containsKey(normalized)) {
+            getOrCreateWord(normalized).recordOccurrence();
+        }
+    }
+
+    /**
      * Restores one stored word with its saved counts. Used by the data layer when
      * loading from storage; counts are added to whatever the word already has.
      *

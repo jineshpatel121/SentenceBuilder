@@ -69,7 +69,8 @@ The project is still in development, and the import, generation, and early auto-
   - requests next-word suggestions only after space, period, or comma
   - shows ranked follower choices from the shared vocabulary
   - lets the user insert a suggestion or type a different next word
-  - records selected/typed follower choices through `ApplicationController.recordSuggestionChoice(...)`
+  - asks before adding an unrecognized manually typed word; No leaves it out of vocabulary
+  - records accepted selected/typed follower choices through `ApplicationController.recordSuggestionChoice(...)`
 - Basic JavaFX file-analysis screen includes:
   - text-file selection
   - file validation
