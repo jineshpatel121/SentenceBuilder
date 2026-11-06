@@ -26,7 +26,7 @@ import javafx.scene.control.TextArea;
  *
  * <p>Sentence Builder, CS4485.0W1 Senior Design, Team 25.
  * UI implementation by Jinesh Patel, started October 30, 2026.
- * NetID: [add your actual UTD NetID].
+ * NetID: JAP220022.
  * Unknown-word confirmation added November 6, 2026.
  */
 public class AutocompleteController {
