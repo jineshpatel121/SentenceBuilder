@@ -17,7 +17,7 @@ import org.junit.jupiter.api.io.TempDir;
  * in-memory application controller, without requiring a live database.
  *
  * <p>Written by Jinesh Patel for CS4485.0W1 Senior Design, Team 25,
- * starting October 30, 2026. NetID: [enter your actual UTD NetID].
+ * starting October 30, 2026. NetID: JAP220022.
  */
 class ApplicationControllerImportIntegrationTest {
 
