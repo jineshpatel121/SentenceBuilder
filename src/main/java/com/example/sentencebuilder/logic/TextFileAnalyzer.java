@@ -18,7 +18,7 @@ import java.util.function.BooleanSupplier;
  * and stages vocabulary changes in the object supplied by the application.
  *
  * <p>Written by Jinesh Patel for CS4485.0W1 Senior Design, Team 25,
- * starting September 25, 2026. NetID: [enter your actual UTD NetID].
+ * starting September 25, 2026. NetID: JAP220022.
  * Vocabulary integration revised October 16, 2026 and shared-controller import
  * integration revised October 23, 2026.
  */
