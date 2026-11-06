@@ -13,7 +13,7 @@ import java.util.Objects;
  * controller, so workers never modify scene controls directly.
  *
  * <p>Written by Jinesh Patel for CS4485.0W1 Senior Design, Team 25,
- * starting October 9, 2026. NetID: [enter your actual UTD NetID].
+ * starting October 9, 2026. NetID: JAP220022.
  * Shared-controller delegation added October 23, 2026.
  */
 public class TextImportTask extends Task<ImportSummary> {
