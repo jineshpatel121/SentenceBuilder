@@ -22,7 +22,7 @@ import javafx.stage.FileChooser;
  * and repository work so user input and rendering remain responsive.
  *
  * <p>Written by Jinesh Patel for CS4485.0W1 Senior Design, Team 25,
- * starting October 9, 2026. NetID: [enter your actual UTD NetID].
+ * starting October 9, 2026. NetID: JAP220022.
  * Vocabulary integration revised October 16 and 23, 2026; cross-screen
  * coordination added October 30, 2026.
  */
